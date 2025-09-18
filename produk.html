@@ -3,61 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <title>Daftar Barang</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #ffffff;
       margin: 20px;
-      background: #fff;
     }
     h1 {
-      color: #222;
+      text-align: center;
+      color: #002855;
+    }
+    .search-container {
+      text-align: center;
+      margin-bottom: 15px;
     }
     input[type="text"] {
-      padding: 5px;
-      font-size: 14px;
-    }
-    button {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid black;
-      background: navy;
-      color: white;
-      cursor: pointer;
-      margin-left: 5px;
-    }
-    button:hover {
-      opacity: 0.9;
+      padding: 8px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
     table {
-      margin-top: 20px;
       border-collapse: collapse;
       width: 100%;
+      margin-top: 10px;
     }
     th, td {
-      border: 1px solid #aaa;
-      padding: 8px;
+      border: 1px solid #ddd;
+      padding: 10px;
       text-align: left;
     }
     th {
-      background: #eee;
+      background-color: #002855;
+      color: white;
     }
-    #pagination {
+    .pagination {
+      text-align: center;
       margin-top: 15px;
     }
-    #pageInfo {
-      margin: 0 10px;
+    .pagination button {
+      padding: 6px 12px;
+      margin: 2px;
+      border: 1px solid #000;
+      border-radius: 8px;
+      background-color: #002855;
+      color: white;
+      cursor: pointer;
+    }
+    .pagination button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .page-info {
+      text-align: center;
+      margin-top: 8px;
     }
   </style>
 </head>
 <body>
-
   <h1>Daftar Barang</h1>
-
-  <input type="text" id="searchBox" placeholder="Cari produk..." />
-  <button onclick="searchProducts()">Cari</button>
-
-  <table id="resultTable">
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Cari produk...">
+  </div>
+  <table id="produkTable">
     <thead>
       <tr>
         <th>No</th>
@@ -68,114 +76,83 @@
     </thead>
     <tbody></tbody>
   </table>
-
-  <div id="pagination">
-    <button onclick="changePage(-1)">Prev</button>
-    <span id="pageInfo">Page 1 of 1</span>
-    <button onclick="changePage(1)">Next</button>
+  <div class="pagination">
+    <button id="prevBtn">Prev</button>
+    <button id="nextBtn">Next</button>
   </div>
+  <div class="page-info" id="pageInfo"></div>
 
   <script>
-    let db;
+    const rowsPerPage = 15;
     let currentPage = 1;
-    const pageSize = 15;
-    let currentKeyword = "";
-    let totalPages = 1;
+    let products = [];
+    let filteredProducts = [];
 
-    // load DB
-    initSqlJs({ locateFile: file => "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.wasm" })
-      .then(SQL => fetch("data.db")
-        .then(res => res.arrayBuffer())
-        .then(buf => {
-          db = new SQL.Database(new Uint8Array(buf));
-          updateTotalPages();
-          displayProducts();
-        })
-      );
-
-    function updateTotalPages() {
-      let countQuery = "SELECT COUNT(*) as cnt FROM Product LEFT JOIN Stock ON Product.Id = Stock.ProductId";
-      let params = {};
-      if (currentKeyword) {
-        countQuery += " WHERE Product.Name LIKE $search";
-        params.$search = "%" + currentKeyword + "%";
+    async function loadProducts() {
+      try {
+        const response = await fetch("products.json"); // file dari repo
+        products = await response.json();
+        filteredProducts = products;
+        renderTable();
+      } catch (error) {
+        console.error("Gagal load products.json:", error);
       }
-
-      const stmt = db.prepare(countQuery);
-      stmt.bind(params);
-      stmt.step();
-      const row = stmt.getAsObject();
-      totalPages = Math.max(1, Math.ceil(row.cnt / pageSize));
-      stmt.free();
     }
 
-    function displayProducts(keyword = currentKeyword) {
-      currentKeyword = keyword;
-      updateTotalPages(); // refresh total pages with keyword filter
-
-      const tbody = document.querySelector("#resultTable tbody");
+    function renderTable() {
+      const tbody = document.querySelector("#produkTable tbody");
       tbody.innerHTML = "";
 
-      let query = `
-        SELECT Product.Id, Product.Name, Product.Price, Stock.Quantity
-        FROM Product
-        LEFT JOIN Stock ON Product.Id = Stock.ProductId
-      `;
-      let params = {};
+      const start = (currentPage - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const pageItems = filteredProducts.slice(start, end);
 
-      if (keyword) {
-        query += " WHERE Product.Name LIKE $search";
-        params.$search = "%" + keyword + "%";
-      }
+      pageItems.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${item.Id}</td>
+          <td>${item.Name}</td>
+          <td>${item.Price}</td>
+          <td>${item.Quantity}</td>
+        `;
+        tbody.appendChild(tr);
+      });
 
-      query += " LIMIT $limit OFFSET $offset";
-      params.$limit = pageSize;
-      params.$offset = (currentPage - 1) * pageSize;
+      document.getElementById("pageInfo").innerText = 
+        `Page ${currentPage} of ${Math.ceil(filteredProducts.length / rowsPerPage)}`;
 
-      try {
-        const stmt = db.prepare(query);
-        stmt.bind(params);
-
-        while (stmt.step()) {
-          const row = stmt.getAsObject();
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${row.Id}</td>
-            <td>${row.Name}</td>
-            <td>${row.Price}</td>
-            <td>${row.Quantity ?? 0}</td>
-          `;
-          tbody.appendChild(tr);
-        }
-        stmt.free();
-
-        if (tbody.children.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="4">Tidak ada hasil ditemukan</td></tr>`;
-        }
-
-        document.getElementById("pageInfo").innerText = "Page " + currentPage + " of " + totalPages;
-
-      } catch (err) {
-        console.error(err);
-        tbody.innerHTML = `<tr><td colspan="4">Error: ${err.message}</td></tr>`;
-      }
+      document.getElementById("prevBtn").disabled = currentPage === 1;
+      document.getElementById("nextBtn").disabled = end >= filteredProducts.length;
     }
 
-    function searchProducts() {
-      currentPage = 1;
-      const keyword = document.getElementById("searchBox").value.trim();
-      displayProducts(keyword);
-    }
-
-    function changePage(direction) {
-      if (direction === -1 && currentPage > 1) {
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      if (currentPage > 1) {
         currentPage--;
-        displayProducts();
-      } else if (direction === 1 && currentPage < totalPages) {
-        currentPage++;
-        displayProducts();
+        renderTable();
       }
-    }
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      if ((currentPage * rowsPerPage) < filteredProducts.length) {
+        currentPage++;
+        renderTable();
+      }
+    });
+
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase();
+      if (query) {
+        filteredProducts = products.filter(p => 
+          p.Name.toLowerCase().includes(query)
+        ).slice(0, 15); // max 15 hasil pencarian
+        currentPage = 1;
+      } else {
+        filteredProducts = products;
+      }
+      renderTable();
+    });
+
+    loadProducts();
   </script>
 </body>
 </html>
