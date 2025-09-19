@@ -37,13 +37,13 @@
         </thead>
         <tbody id="summary"></tbody>
       </table>
+      <div id="overallTotal" class="text-right font-bold mt-2"></div>
     </div>
   </div>
 
   <script>
     const DateTime = luxon.DateTime;
 
-    // Subtitle: current Jakarta time
     function updateTime() {
       const now = DateTime.now().setZone("Asia/Jakarta");
       document.getElementById("subtitle").textContent =
@@ -52,7 +52,6 @@
     setInterval(updateTime, 1000);
     updateTime();
 
-    // Fix parsing of DateCreated
     function parseDateTime(dateStr) {
       if (!dateStr) return null;
       let iso = dateStr.replace(" ", "T").replace(/(\.\d{6})\d*/, "$1");
@@ -69,7 +68,7 @@
 
         const allTransactions = [...payments, ...refunds];
 
-        // Build PaymentTypeId -> Name map
+        // PaymentTypeId -> Name map
         const typeMap = {};
         (data.PaymentType || []).forEach(pt => typeMap[pt.Id] = pt.Name);
 
@@ -79,12 +78,10 @@
         allTransactions.sort((a,b) => new Date(a.DateCreated) - new Date(b.DateCreated));
 
         let paymentCounter = 1;
-
         allTransactions.forEach(p => {
           const tr = document.createElement("tr");
-
           if (p.Type === "Refund") {
-            tr.className = "text-red-600"; // Refund font red
+            tr.className = "text-red-600";
             tr.innerHTML = `
               <td class="p-2 border-b">-</td>
               <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
@@ -99,15 +96,17 @@
               <td class="p-2 border-b">${parseDateTime(p.DateCreated)?.toFormat("HH:mm") || "-"}</td>
             `;
           }
-
           tbody.appendChild(tr);
         });
 
-        // Summary table
+        // --- Summary table ---
         const summary = {};
+        let overall = 0;
+
         allTransactions.forEach(p => {
           const key = p.Type === "Payment" ? (typeMap[p.PaymentTypeId] || "Unknown") : "Refund";
           summary[key] = (summary[key] || 0) + Number(p.Amount);
+          overall += Number(p.Amount);
         });
 
         const summaryTbody = document.getElementById("summary");
@@ -121,13 +120,16 @@
           summaryTbody.appendChild(tr);
         });
 
+        document.getElementById("overallTotal").textContent =
+          `Total Keseluruhan: Rp ${overall.toLocaleString("id-ID")}`;
+
       } catch (err) {
         console.error("Error loading Transactions.json:", err);
       }
     }
 
     loadData();
-    setInterval(loadData, 60000); // refresh setiap 60 detik
+    setInterval(loadData, 60000);
   </script>
 </body>
 </html>
