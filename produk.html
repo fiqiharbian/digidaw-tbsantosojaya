@@ -3,84 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Daftar Barang</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #ffffff;
-      margin: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #002855;
-    }
-    .search-container {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    input[type="text"] {
-      padding: 8px;
-      width: 250px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 10px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #002855;
-      color: white;
-    }
-    .pagination {
-      text-align: center;
-      margin-top: 15px;
-    }
-    .pagination button {
-      padding: 6px 12px;
-      margin: 2px;
-      border: 1px solid #000;
-      border-radius: 8px;
-      background-color: #002855;
-      color: white;
-      cursor: pointer;
-    }
-    .pagination button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-    .page-info {
-      text-align: center;
-      margin-top: 8px;
-    }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <h1>Daftar Barang</h1>
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Cari produk...">
+<body class="bg-gray-50 p-6">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Daftar Barang</h1>
+
+    <!-- Search -->
+    <div class="mb-4">
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Cari produk..." 
+        class="w-full md:w-1/2 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto bg-white rounded-xl shadow p-4 mb-6">
+      <table class="min-w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-left">
+            <th class="p-2 border-b">No</th>
+            <th class="p-2 border-b">Nama Produk</th>
+            <th class="p-2 border-b">Harga</th>
+            <th class="p-2 border-b">Stok</th>
+          </tr>
+        </thead>
+        <tbody id="produkTable"></tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex flex-col items-center space-y-2">
+      <div class="space-x-2">
+        <button id="prevBtn" class="px-4 py-2 rounded-lg bg-blue-600 text-white disabled:bg-gray-300">Prev</button>
+        <button id="nextBtn" class="px-4 py-2 rounded-lg bg-blue-600 text-white disabled:bg-gray-300">Next</button>
+      </div>
+      <div id="pageInfo" class="text-gray-600 text-sm"></div>
+    </div>
   </div>
-  <table id="produkTable">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Nama Produk</th>
-        <th>Harga</th>
-        <th>Stok</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <div class="pagination">
-    <button id="prevBtn">Prev</button>
-    <button id="nextBtn">Next</button>
-  </div>
-  <div class="page-info" id="pageInfo"></div>
 
   <script>
     const rowsPerPage = 15;
@@ -90,8 +53,8 @@
 
     async function loadProducts() {
       try {
-        const response = await fetch("products.json"); // file dari repo
-        products = await response.json();
+        const res = await axios.get("products.json"); // file dari repo
+        products = res.data;
         filteredProducts = products;
         renderTable();
       } catch (error) {
@@ -100,7 +63,7 @@
     }
 
     function renderTable() {
-      const tbody = document.querySelector("#produkTable tbody");
+      const tbody = document.getElementById("produkTable");
       tbody.innerHTML = "";
 
       const start = (currentPage - 1) * rowsPerPage;
@@ -110,10 +73,10 @@
       pageItems.forEach(item => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${item.Id}</td>
-          <td>${item.Name}</td>
-          <td>${item.Price}</td>
-          <td>${item.Quantity}</td>
+          <td class="p-2 border-b">${item.Id}</td>
+          <td class="p-2 border-b">${item.Name}</td>
+          <td class="p-2 border-b">Rp ${Number(item.Price).toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b">${item.Quantity}</td>
         `;
         tbody.appendChild(tr);
       });
