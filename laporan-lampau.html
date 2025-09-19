@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Laporan Lampau</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 p-6">
@@ -58,7 +59,9 @@
   </div>
 
   <script>
+    const DateTime = luxon.DateTime;
     let payments = [];
+    let refunds = [];
     let paymentTypes = [];
     let paymentTypesMap = {};
 
@@ -66,49 +69,69 @@
       try {
         const res = await axios.get("Transactions.json");
         const data = res.data;
-        payments = data.Payment || [];
-        paymentTypes = data.PaymentType || [];
 
+        payments = (data.Payment || []).map(p => ({...p, Type:"Payment"}));
+        refunds = (data.Refund || []).map(r => ({
+          ...r,
+          Type: "Refund",
+          Amount: -Number(r.Amount),
+          Id: "-" // no number for refund
+        }));
+        paymentTypes = data.PaymentType || [];
         paymentTypes.forEach(pt => paymentTypesMap[pt.Id] = pt.Name);
+
       } catch(err) {
         console.error("Error loading Transactions.json", err);
       }
     }
 
+    function parseDateTime(dateStr) {
+      if (!dateStr) return null;
+      let iso = dateStr.replace(" ", "T").replace(/(\.\d{6})\d*/, "$1");
+      const dt = DateTime.fromISO(iso, { zone: "Asia/Jakarta" });
+      return dt.isValid ? dt : null;
+    }
+
     function filterByDate(start, end=null) {
-      return payments.filter(p => {
-        const date = new Date(p.DateCreated.replace(" ", "T"));
-        const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const allTransactions = [...payments, ...refunds];
+      const startDate = DateTime.fromISO(start).startOf("day");
+      const endDate = end ? DateTime.fromISO(end).endOf("day") : startDate.endOf("day");
 
-        const startDate = new Date(start);
-        startDate.setHours(0,0,0,0);
-
-        if(end){
-          const endDate = new Date(end);
-          endDate.setHours(23,59,59,999);
-          return date >= startDate && date <= endDate;
-        } else {
-          return dateOnly.getTime() === startDate.getTime();
-        }
+      return allTransactions.filter(t => {
+        const dt = parseDateTime(t.DateCreated);
+        return dt && dt >= startDate && dt <= endDate;
       });
     }
 
     function renderTable(filtered) {
       const tbody = document.getElementById("transactions");
       tbody.innerHTML = "";
+      let counter = 1;
+
+      filtered.sort((a,b) => new Date(a.DateCreated) - new Date(b.DateCreated));
 
       filtered.forEach(p => {
-        const dateObj = new Date(p.DateCreated.replace(" ", "T"));
-        const jam = dateObj.getHours().toString().padStart(2,'0');
-        const menit = dateObj.getMinutes().toString().padStart(2,'0');
+        const dt = parseDateTime(p.DateCreated);
+        const jam = dt ? dt.toFormat("HH:mm") : "-";
 
         const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="p-2 border-b">${p.Id}</td>
-          <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-          <td class="p-2 border-b">${paymentTypesMap[p.PaymentTypeId] || "-"}</td>
-          <td class="p-2 border-b">${jam}:${menit}</td>
-        `;
+
+        if(p.Type === "Refund"){
+          tr.className = "text-red-600";
+          tr.innerHTML = `
+            <td class="p-2 border-b">-</td>
+            <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+            <td class="p-2 border-b">Refund</td>
+            <td class="p-2 border-b">${jam}</td>
+          `;
+        } else {
+          tr.innerHTML = `
+            <td class="p-2 border-b">${counter++}</td>
+            <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+            <td class="p-2 border-b">${paymentTypesMap[p.PaymentTypeId] || "-"}</td>
+            <td class="p-2 border-b">${jam}</td>
+          `;
+        }
         tbody.appendChild(tr);
       });
 
@@ -123,9 +146,11 @@
 
     function renderSummary(filtered) {
       const summaryData = { TOTAL: { count:0, total:0 } };
+
       filtered.forEach(p => {
-        const method = paymentTypesMap[p.PaymentTypeId] || "Lainnya";
+        const method = p.Type === "Refund" ? "Refund" : (paymentTypesMap[p.PaymentTypeId] || "Lainnya");
         const amt = Number(p.Amount) || 0;
+
         if(!summaryData[method]) summaryData[method] = { count:0, total:0 };
         summaryData[method].count++;
         summaryData[method].total += amt;
@@ -144,6 +169,7 @@
           <td class="p-2 border-b">${summaryData[m].count}</td>
           <td class="p-2 border-b">Rp ${summaryData[m].total.toLocaleString("id-ID")}</td>
         `;
+        if(m === "Refund") row.className = "text-red-600";
         sumBody.appendChild(row);
       });
     }
