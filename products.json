@@ -19,7 +19,7 @@
   },
   {
     "Id": 4,
-    "Name": "Katalux 7400 Supwer White Cat Semprot 300cc",
+    "Name": "Katalux 7400 Super White Cat Semprot 300cc",
     "Price": 27000.0,
     "Quantity": null
   },
@@ -43,7 +43,7 @@
   },
   {
     "Id": 8,
-    "Name": "Katalux 7108 Met Ymh Red Cat Semprot 300cc",
+    "Name": "Katalux 7108 Met Yamaha Red Cat Semprot 300cc",
     "Price": 27000.0,
     "Quantity": 5
   },
@@ -163,7 +163,7 @@
   },
   {
     "Id": 28,
-    "Name": "Katalux 704 Yamahangreen Cat Semprot 300cc",
+    "Name": "Katalux 704 Yamaha Green Cat Semprot 300cc",
     "Price": 27000.0,
     "Quantity": 7
   },
@@ -3517,7 +3517,7 @@
   },
   {
     "Id": 587,
-    "Name": "Dcota Foot Klep",
+    "Name": "Dcota Foot Klep HAPUS",
     "Price": 20000.0,
     "Quantity": null
   },
@@ -3685,14 +3685,14 @@
   },
   {
     "Id": 615,
-    "Name": "Vino Foot Klep 3/4\"",
+    "Name": "Vino Foot Klep Jantung 3/4\"",
     "Price": 30000.0,
     "Quantity": 12
   },
   {
     "Id": 616,
-    "Name": "Foot Klep",
-    "Price": 0.0,
+    "Name": "Foot Klep 1\"",
+    "Price": 20000.0,
     "Quantity": null
   },
   {
@@ -3901,7 +3901,7 @@
   },
   {
     "Id": 651,
-    "Name": "Dcota Selang Shower - SWD 03 C",
+    "Name": "Dcota Selang Shower - SWD 03 C HAPUS",
     "Price": 105000.0,
     "Quantity": null
   },
@@ -4633,7 +4633,7 @@
   },
   {
     "Id": 773,
-    "Name": "Fiting Gantung Kop",
+    "Name": "Fitting Gantung Kop",
     "Price": 0.0,
     "Quantity": null
   },
@@ -4893,7 +4893,7 @@
     "Id": 816,
     "Name": "Broco Terminal 2 Lubang",
     "Price": 32000.0,
-    "Quantity": 6
+    "Quantity": 16
   },
   {
     "Id": 817,
@@ -4911,7 +4911,7 @@
     "Id": 819,
     "Name": "Broco Stop Kontak Tempel",
     "Price": 15000.0,
-    "Quantity": null
+    "Quantity": 32
   },
   {
     "Id": 820,
@@ -5011,7 +5011,7 @@
   },
   {
     "Id": 836,
-    "Name": "Solvex 50cm",
+    "Name": "Solvex 50cm Selang Fleksibel",
     "Price": 95000.0,
     "Quantity": null
   },
@@ -6057,13 +6057,13 @@
     "Id": 1010,
     "Name": "Loyal Terminal 3 Lubang",
     "Price": 17000.0,
-    "Quantity": 9
+    "Quantity": 21
   },
   {
     "Id": 1011,
     "Name": "Loyal Terminal 4 Lubang",
     "Price": 23000.0,
-    "Quantity": 7
+    "Quantity": 19
   },
   {
     "Id": 1012,
@@ -6075,7 +6075,7 @@
     "Id": 1013,
     "Name": "Broco Stop Kontak Tanam Cream",
     "Price": 15000.0,
-    "Quantity": 28
+    "Quantity": 48
   },
   {
     "Id": 1014,
@@ -6087,7 +6087,7 @@
     "Id": 1015,
     "Name": "Broco Jek Antena Tanam",
     "Price": 30000.0,
-    "Quantity": null
+    "Quantity": 4
   },
   {
     "Id": 1016,
@@ -6099,19 +6099,19 @@
     "Id": 1017,
     "Name": "Broco Terminal Isi 4 + LED",
     "Price": 50000.0,
-    "Quantity": null
+    "Quantity": 5
   },
   {
     "Id": 1018,
     "Name": "Broco Stop Kontak Tanam + Saklar",
     "Price": 27000.0,
-    "Quantity": null
+    "Quantity": 4
   },
   {
     "Id": 1019,
     "Name": "Broco Saklar Tanam Cream 1",
     "Price": 13000.0,
-    "Quantity": null
+    "Quantity": 20
   },
   {
     "Id": 1020,
@@ -6123,7 +6123,7 @@
     "Id": 1021,
     "Name": "Broco Saklar Tanam Cream 2",
     "Price": 21000.0,
-    "Quantity": null
+    "Quantity": 20
   },
   {
     "Id": 1022,
@@ -6133,15 +6133,15 @@
   },
   {
     "Id": 1023,
-    "Name": "Broco Saklar Tempel Cream",
+    "Name": "Broco Saklar Tempel Cream 1",
     "Price": 13000.0,
-    "Quantity": null
+    "Quantity": 11
   },
   {
     "Id": 1024,
     "Name": "Broco Saklar Tempel Cream 2",
     "Price": 17000.0,
-    "Quantity": null
+    "Quantity": 42
   },
   {
     "Id": 1025,
@@ -6157,31 +6157,31 @@
   },
   {
     "Id": 1027,
-    "Name": "Broco Jek Kecil Lanang",
+    "Name": "Broco Jek Lanang Kecil",
     "Price": 7000.0,
     "Quantity": 48
   },
   {
     "Id": 1028,
-    "Name": "Broco Jek Kecil Wadon",
+    "Name": "Broco Jek Wadon Kecil",
     "Price": 5000.0,
     "Quantity": 28
   },
   {
     "Id": 1029,
-    "Name": "Broco Jek Besar Lanang",
+    "Name": "Broco Jek Lanang Besar",
     "Price": 12000.0,
-    "Quantity": null
+    "Quantity": 19
   },
   {
     "Id": 1030,
-    "Name": "Broco Jek Besar Wadon",
+    "Name": "Broco Jek Wadon Besar",
     "Price": 18000.0,
-    "Quantity": null
+    "Quantity": 21
   },
   {
     "Id": 1031,
-    "Name": "Loyal Jek Kecil Lanang",
+    "Name": "Loyal Jek Lanang Kecil",
     "Price": 7000.0,
     "Quantity": 30
   },
@@ -6679,9 +6679,9 @@
   },
   {
     "Id": 1114,
-    "Name": "Broco Fiting Lampu Cream",
+    "Name": "Broco Fitting Lampu Cream",
     "Price": 13000.0,
-    "Quantity": null
+    "Quantity": 30
   },
   {
     "Id": 1115,
@@ -7406,7 +7406,7 @@
   {
     "Id": 1235,
     "Name": "Amplas Meteran 1m",
-    "Price": 8000.0,
+    "Price": 10000.0,
     "Quantity": null
   },
   {
@@ -7418,12 +7418,12 @@
   {
     "Id": 1237,
     "Name": "Amplas Meteran 1/2m",
-    "Price": 4500.0,
+    "Price": 5000.0,
     "Quantity": null
   },
   {
     "Id": 1238,
-    "Name": "Amplas Meteran 1/4m",
+    "Name": "Amplas Meteran 1/4m hapus",
     "Price": 2500.0,
     "Quantity": null
   },
@@ -7603,19 +7603,19 @@
   },
   {
     "Id": 1268,
-    "Name": "Amplas Tumpuk 100",
+    "Name": "Amplas Gerinda Amplas Tumpuk 100",
     "Price": 7000.0,
     "Quantity": null
   },
   {
     "Id": 1269,
-    "Name": "Amplas Tumpuk 60",
+    "Name": "Amplas Gerinda Amplas Tumpuk 60",
     "Price": 7000.0,
     "Quantity": 20
   },
   {
     "Id": 1270,
-    "Name": "Amplas Tumpuk 80",
+    "Name": "Amplas Gerinda Amplas Tumpuk 80",
     "Price": 7000.0,
     "Quantity": 40
   },
@@ -7939,19 +7939,19 @@
   },
   {
     "Id": 1324,
-    "Name": "DCOTA TUSEN KLEP 1/2\"",
+    "Name": "DCOTA TUSEN KLEP 1/2\" hapus",
     "Price": 0.0,
     "Quantity": null
   },
   {
     "Id": 1325,
-    "Name": "DCOTA TUSEN KLEP 3/4\"",
+    "Name": "DCOTA TUSEN KLEP 3/4\" hapus",
     "Price": 0.0,
     "Quantity": null
   },
   {
     "Id": 1326,
-    "Name": "DCOTA TUSEN KLEP 1\"",
+    "Name": "DCOTA TUSEN KLEP 1\" hapus",
     "Price": 0.0,
     "Quantity": null
   },
@@ -8041,13 +8041,13 @@
   },
   {
     "Id": 1341,
-    "Name": "DCOTA STOP KRAN PLASTIK 1-1/4\"",
+    "Name": "DCOTA STOP KRAN PLASTIK 1 1/4\"",
     "Price": 0.0,
     "Quantity": null
   },
   {
     "Id": 1342,
-    "Name": "DCOTA STOP KRAN PLASTIK 1-1/2\"",
+    "Name": "DCOTA STOP KRAN PLASTIK 1 1/2\"",
     "Price": 0.0,
     "Quantity": null
   },
@@ -8113,19 +8113,19 @@
   },
   {
     "Id": 1353,
-    "Name": "Supramas Elbow (D) 2 1/2\"",
+    "Name": "Supramas L 2 1/2\" (D)",
     "Price": 0.0,
     "Quantity": null
   },
   {
     "Id": 1354,
-    "Name": "Supramas Elbow (D) 3\"",
+    "Name": "Supramas L 3\" (D)",
     "Price": 0.0,
     "Quantity": null
   },
   {
     "Id": 1355,
-    "Name": "Supramas Tee (D) 3\"",
+    "Name": "Supramas T 3\" (D)",
     "Price": 0.0,
     "Quantity": null
   },
@@ -8816,7 +8816,7 @@
   {
     "Id": 1470,
     "Name": "Over Steker Lampu",
-    "Price": 0.0,
+    "Price": 22000.0,
     "Quantity": 22
   },
   {
@@ -10117,7 +10117,7 @@
   },
   {
     "Id": 1687,
-    "Name": "Solvex Alat Kloset/Flush SF-70205",
+    "Name": "Solvex SF-70205 Alat Kloset Pelampung Kloset",
     "Price": 65000.0,
     "Quantity": 20
   },
@@ -12586,5 +12586,41 @@
     "Name": "RUCIKA PIPA AW 2 1/2\"",
     "Price": 0.0,
     "Quantity": 39
+  },
+  {
+    "Id": 2099,
+    "Name": "Broco Fitting Lampu Hitam",
+    "Price": 10000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2100,
+    "Name": "Jek Kabel Hias / Soket Lampu Hias",
+    "Price": 15000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2101,
+    "Name": "Ceker  Ayam",
+    "Price": 11500.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2102,
+    "Name": "Amplas Lembaran",
+    "Price": 5000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2103,
+    "Name": "Jebakan Tikus Kurung",
+    "Price": 25000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2104,
+    "Name": "Jebakan Tikus Jepit",
+    "Price": 0.0,
+    "Quantity": null
   }
 ]
