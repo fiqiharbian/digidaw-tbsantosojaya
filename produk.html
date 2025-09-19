@@ -42,6 +42,7 @@
         <button id="nextBtn" class="px-4 py-2 rounded-lg bg-blue-600 text-white disabled:bg-gray-300">Next</button>
       </div>
       <div id="pageInfo" class="text-gray-600 text-sm"></div>
+      <div id="searchInfo" class="text-gray-600 text-sm"></div>
     </div>
   </div>
 
@@ -84,6 +85,9 @@
       document.getElementById("pageInfo").innerText = 
         `Page ${currentPage} of ${Math.ceil(filteredProducts.length / rowsPerPage)}`;
 
+      document.getElementById("searchInfo").innerText = 
+        `Total hasil: ${filteredProducts.length}`;
+
       document.getElementById("prevBtn").disabled = currentPage === 1;
       document.getElementById("nextBtn").disabled = end >= filteredProducts.length;
     }
@@ -107,7 +111,7 @@
       if (query) {
         filteredProducts = products.filter(p => 
           p.Name.toLowerCase().includes(query)
-        ).slice(0, 15); // max 15 hasil pencarian
+        );
         currentPage = 1;
       } else {
         filteredProducts = products;
