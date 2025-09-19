@@ -76,7 +76,7 @@
           <td class="p-2 border-b">${item.Id}</td>
           <td class="p-2 border-b">${item.Name}</td>
           <td class="p-2 border-b">Rp ${Number(item.Price).toLocaleString("id-ID")}</td>
-          <td class="p-2 border-b">${item.Quantity}</td>
+          <td class="p-2 border-b">${item.Quantity ?? 0}</td>
         `;
         tbody.appendChild(tr);
       });
