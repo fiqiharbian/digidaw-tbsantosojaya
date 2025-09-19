@@ -30,25 +30,25 @@
   <script>
     const DateTime = luxon.DateTime;
 
-    // Show Jakarta date & time
+    // Subtitle: current Jakarta time
     function updateTime() {
       const now = DateTime.now().setZone("Asia/Jakarta");
-      document.getElementById("subtitle").textContent = 
+      document.getElementById("subtitle").textContent =
         now.toFormat("cccc, dd LLL yyyy HH:mm:ss");
     }
     setInterval(updateTime, 1000);
     updateTime();
 
-    // Fetch data
+    // Load data from Transactions.json
     async function loadData() {
       try {
-        const paymentsRes = await axios.get("Payment.json");
-        const paymentTypesRes = await axios.get("PaymentType.json");
+        const res = await axios.get("Transactions.json");
+        const data = res.data;
 
-        const payments = paymentsRes.data;
-        const paymentTypes = paymentTypesRes.data;
+        const payments = data.Payment || [];
+        const paymentTypes = data.PaymentType || [];
 
-        // Build lookup for PaymentTypeId → Name
+        // Build PaymentTypeId -> Name map
         const typeMap = {};
         paymentTypes.forEach(pt => typeMap[pt.Id] = pt.Name);
 
@@ -67,13 +67,12 @@
         });
 
       } catch (err) {
-        console.error("Error loading data:", err);
+        console.error("Error loading Transactions.json:", err);
       }
     }
 
     loadData();
-    // optional auto refresh every 60s
-    setInterval(loadData, 60000);
+    setInterval(loadData, 60000); // refresh setiap 60 detik
   </script>
 </body>
 </html>
