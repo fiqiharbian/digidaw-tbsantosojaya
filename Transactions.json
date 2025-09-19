@@ -1,0 +1,36 @@
+{
+  "PaymentType": [
+    {
+      "Id": 1,
+      "Name": "Cash"
+    },
+    {
+      "Id": 2,
+      "Name": "Transfer"
+    },
+    {
+      "Id": 3,
+      "Name": "Hutang"
+    }
+  ],
+  "Payment": [
+    {
+      "Id": 1,
+      "Amount": 95000,
+      "PaymentTypeId": 1,
+      "DateCreated": "2025-09-19 12:49:06.2801226"
+    },
+    {
+      "Id": 2,
+      "Amount": 95000,
+      "PaymentTypeId": 1,
+      "DateCreated": "2025-09-19 12:51:02.9938613"
+    },
+    {
+      "Id": 3,
+      "Amount": 160000,
+      "PaymentTypeId": 1,
+      "DateCreated": "2025-09-19 13:07:36.1538059"
+    }
+  ]
+}
