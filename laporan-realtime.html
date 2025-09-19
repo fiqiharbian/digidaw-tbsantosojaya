@@ -12,7 +12,8 @@
     <h1 class="text-3xl font-bold mb-2">Transaksi Hari Ini</h1>
     <p id="subtitle" class="text-gray-600 mb-6"></p>
 
-    <div class="overflow-x-auto bg-white rounded-xl shadow p-4">
+    <!-- Tabel transaksi -->
+    <div class="overflow-x-auto bg-white rounded-xl shadow p-4 mb-6">
       <table class="min-w-full border-collapse">
         <thead>
           <tr class="bg-gray-100 text-left">
@@ -23,6 +24,21 @@
           </tr>
         </thead>
         <tbody id="transactions"></tbody>
+      </table>
+    </div>
+
+    <!-- Tabel ringkasan -->
+    <div class="overflow-x-auto bg-white rounded-xl shadow p-4">
+      <h2 class="text-xl font-semibold mb-4">Ringkasan Transaksi</h2>
+      <table class="min-w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-left">
+            <th class="p-2 border-b">Metode</th>
+            <th class="p-2 border-b">Total Transaksi</th>
+            <th class="p-2 border-b">Nominal (Rp)</th>
+          </tr>
+        </thead>
+        <tbody id="summary"></tbody>
       </table>
     </div>
   </div>
@@ -52,26 +68,60 @@
         const typeMap = {};
         paymentTypes.forEach(pt => typeMap[pt.Id] = pt.Name);
 
+        // --- Isi tabel transaksi ---
         const tbody = document.getElementById("transactions");
         tbody.innerHTML = "";
 
-payments.forEach(p => {
-  const tr = document.createElement("tr");
+        payments.forEach(p => {
+          const tr = document.createElement("tr");
 
-  // ambil jam:menit dari DateCreated
-  const jsDate = new Date(p.DateCreated.replace(" ", "T"));
-  const jam = jsDate.getHours().toString().padStart(2, "0");
-  const menit = jsDate.getMinutes().toString().padStart(2, "0");
+          // ambil jam & menit dari DateCreated
+          const jsDate = new Date(p.DateCreated.replace(" ", "T"));
+          const jam = jsDate.getHours().toString().padStart(2, "0");
+          const menit = jsDate.getMinutes().toString().padStart(2, "0");
 
-  tr.innerHTML = `
-    <td class="p-2 border-b">${p.Id}</td>
-    <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-    <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
-    <td class="p-2 border-b">${jam}:${menit}</td>
-  `;
-  tbody.appendChild(tr);
-});
+          tr.innerHTML = `
+            <td class="p-2 border-b">${p.Id}</td>
+            <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+            <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
+            <td class="p-2 border-b">${jam}:${menit}</td>
+          `;
+          tbody.appendChild(tr);
+        });
 
+        // --- Hitung ringkasan ---
+        const summaryData = {
+          "Cash": { count: 0, total: 0 },
+          "Hutang": { count: 0, total: 0 },
+          "Transfer": { count: 0, total: 0 },
+          "TOTAL": { count: 0, total: 0 }
+        };
+
+        payments.forEach(p => {
+          const method = typeMap[p.PaymentTypeId] || "Lainnya";
+          const amt = Number(p.Amount) || 0;
+
+          if (summaryData[method]) {
+            summaryData[method].count++;
+            summaryData[method].total += amt;
+          }
+          summaryData["TOTAL"].count++;
+          summaryData["TOTAL"].total += amt;
+        });
+
+        // --- Isi tabel ringkasan ---
+        const sumBody = document.getElementById("summary");
+        sumBody.innerHTML = "";
+
+        ["Cash", "Hutang", "Transfer", "TOTAL"].forEach(m => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td class="p-2 border-b font-semibold">${m}</td>
+            <td class="p-2 border-b">${summaryData[m].count}</td>
+            <td class="p-2 border-b">Rp ${summaryData[m].total.toLocaleString("id-ID")}</td>
+          `;
+          sumBody.appendChild(row);
+        });
 
       } catch (err) {
         console.error("Error loading Transactions.json:", err);
