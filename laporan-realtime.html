@@ -55,16 +55,23 @@
         const tbody = document.getElementById("transactions");
         tbody.innerHTML = "";
 
-        payments.forEach(p => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td class="p-2 border-b">${p.Id}</td>
-            <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-            <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
-            <td class="p-2 border-b">${DateTime.fromISO(p.DateCreated, { zone: "Asia/Jakarta" }).toFormat("dd LLL yyyy HH:mm")}</td>
-          `;
-          tbody.appendChild(tr);
-        });
+payments.forEach(p => {
+  const tr = document.createElement("tr");
+
+  // ambil jam:menit dari DateCreated
+  const jsDate = new Date(p.DateCreated.replace(" ", "T"));
+  const jam = jsDate.getHours().toString().padStart(2, "0");
+  const menit = jsDate.getMinutes().toString().padStart(2, "0");
+
+  tr.innerHTML = `
+    <td class="p-2 border-b">${p.Id}</td>
+    <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+    <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
+    <td class="p-2 border-b">${jam}:${menit}</td>
+  `;
+  tbody.appendChild(tr);
+});
+
 
       } catch (err) {
         console.error("Error loading Transactions.json:", err);
