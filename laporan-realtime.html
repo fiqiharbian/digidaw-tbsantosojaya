@@ -52,7 +52,13 @@
     setInterval(updateTime, 1000);
     updateTime();
 
-    // Load data from Transactions.json
+    // Fix parsing of DateCreated
+    function parseDateTime(dateStr) {
+      if (!dateStr) return null;
+      let iso = dateStr.replace(" ", "T").replace(/(\.\d{6})\d*/, "$1");
+      return DateTime.fromISO(iso, { zone: "Asia/Jakarta" });
+    }
+
     async function loadData() {
       try {
         const res = await axios.get("Transactions.json");
@@ -72,14 +78,28 @@
 
         allTransactions.sort((a,b) => new Date(a.DateCreated) - new Date(b.DateCreated));
 
+        let paymentCounter = 1;
+
         allTransactions.forEach(p => {
           const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td class="p-2 border-b">${p.Id}</td>
-            <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-            <td class="p-2 border-b">${p.Type === "Payment" ? (typeMap[p.PaymentTypeId] || "-") : "Refund"}</td>
-            <td class="p-2 border-b">${DateTime.fromISO(p.DateCreated, { zone: "Asia/Jakarta" }).toFormat("HH:mm")}</td>
-          `;
+
+          if (p.Type === "Refund") {
+            tr.className = "text-red-600"; // Refund font red
+            tr.innerHTML = `
+              <td class="p-2 border-b">-</td>
+              <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+              <td class="p-2 border-b">Refund</td>
+              <td class="p-2 border-b">${parseDateTime(p.DateCreated)?.toFormat("HH:mm") || "-"}</td>
+            `;
+          } else {
+            tr.innerHTML = `
+              <td class="p-2 border-b">${paymentCounter++}</td>
+              <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+              <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
+              <td class="p-2 border-b">${parseDateTime(p.DateCreated)?.toFormat("HH:mm") || "-"}</td>
+            `;
+          }
+
           tbody.appendChild(tr);
         });
 
