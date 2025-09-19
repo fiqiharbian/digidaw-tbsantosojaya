@@ -1,54 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TB Santoso Jaya Reporting</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      text-align: center;
-    }
-    h1 {
-      font-size: 2em;
-      margin-bottom: 40px;
-      color: #000;
-    }
-    .btn {
-      display: block;
-      width: 200px;
-      margin: 15px auto;
-      padding: 12px 20px;
-      border: 2px solid black;
-      border-radius: 25px;
-      background: #001f4d; /* navy blue */
-      color: white;
-      font-size: 1em;
-      font-weight: bold;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .btn:hover {
-      background: #003080;
-      transform: translateY(-2px);
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
-    <h1>TB Santoso Jaya Reporting</h1>
-    <a href="laporan-lampau.html" class="btn">Laporan Lampau</a>
-    <a href="laporan-realtime.html" class="btn">Laporan Real-Time</a>
-    <a href="produk.html" class="btn">Daftar Produk</a>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-6">
+  <div class="bg-white rounded-xl shadow-xl p-10 max-w-md w-full text-center">
+    <h1 class="text-3xl font-bold mb-10 text-gray-800">TB Santoso Jaya Reporting</h1>
+
+    <a href="laporan-lampau.html" class="block w-full mb-4 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Laporan Lampau</a>
+    <a href="laporan-realtime.html" class="block w-full mb-4 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Laporan Real-Time</a>
+    <a href="produk.html" class="block w-full mb-4 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Daftar Produk</a>
   </div>
 </body>
 </html>
