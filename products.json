@@ -3357,7 +3357,7 @@
     "Id": 560,
     "Name": "Paku Ecer",
     "Price": 20000.0,
-    "Quantity": 0
+    "Quantity": -1
   },
   {
     "Id": 561,
@@ -3578,8 +3578,8 @@
   {
     "Id": 597,
     "Name": "Dcota Kran 1/2\" Stainless DCL",
-    "Price": 25000.0,
-    "Quantity": 0
+    "Price": 30000.0,
+    "Quantity": -1
   },
   {
     "Id": 598,
@@ -3913,7 +3913,7 @@
   },
   {
     "Id": 653,
-    "Name": "Dcota Kran Tembok - DDT 01 SET",
+    "Name": "hapusDcota Kran Tembok - DDT 01 SET",
     "Price": 185000.0,
     "Quantity": 0
   },
@@ -5511,7 +5511,7 @@
     "Id": 919,
     "Name": "Savic Gembok 50mm",
     "Price": 25000.0,
-    "Quantity": 0
+    "Quantity": -1
   },
   {
     "Id": 920,
@@ -5823,7 +5823,7 @@
     "Id": 971,
     "Name": "Kuku Macan Uk. 20 (per batang)",
     "Price": 2500.0,
-    "Quantity": -6
+    "Quantity": -8
   },
   {
     "Id": 972,
@@ -7651,25 +7651,25 @@
   },
   {
     "Id": 1276,
-    "Name": "DCOTA Kran Tembok 1/2\" DC",
+    "Name": "hapusDCOTA Kran Tembok 1/2\" DC",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1277,
-    "Name": "DCOTA Kran Tembok 3/4\" DC",
+    "Name": "hapusDCOTA Kran Tembok 3/4\" DC",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1278,
-    "Name": "DCOTA Kran Tembok 1/2\" DCL",
+    "Name": "hapusDCOTA Kran Tembok 1/2\" DCL",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1279,
-    "Name": "DCOTA Kran Tembok 3/4\" DCL",
+    "Name": "hapusDCOTA Kran Tembok 3/4\" DCL",
     "Price": 0.0,
     "Quantity": 0
   },
@@ -7741,13 +7741,13 @@
   },
   {
     "Id": 1291,
-    "Name": "DCOTA KRAN PLASTIK HITAM 1/2\" D-RES",
+    "Name": "hapusDCOTA KRAN PLASTIK HITAM 1/2\" D-RES",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1292,
-    "Name": "DCOTA KRAN PLASTIK HITAM 3/4\" D-RES",
+    "Name": "hapusDCOTA KRAN PLASTIK HITAM 3/4\" D-RES",
     "Price": 0.0,
     "Quantity": 0
   },
@@ -13048,5 +13048,11 @@
     "Name": "Kawat Ayakan Pasir Meteran",
     "Price": 10000.0,
     "Quantity": -1
+  },
+  {
+    "Id": 2176,
+    "Name": "Benang jagung pak",
+    "Price": 20000.0,
+    "Quantity": null
   }
 ]
