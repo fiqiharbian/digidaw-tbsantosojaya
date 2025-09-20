@@ -58,7 +58,6 @@
 
     function parseISO(dateStr) {
       if (!dateStr) return null;
-      // Trim fractional seconds to 6 digits max
       const fixed = dateStr.replace(" ", "T").replace(/(\.\d{6})\d+/, "$1");
       const dt = DateTime.fromISO(fixed, { zone: "Asia/Jakarta" });
       return dt.isValid ? dt : null;
@@ -146,6 +145,7 @@
     function renderSummary(payments, refunds, typeMap) {
       const summaryData = { TOTAL: { count:0, total:0 } };
 
+      // Sales
       payments.forEach(p => {
         const method = typeMap[p.PaymentTypeId] || "Lainnya";
         const amt = Number(p.Amount) || 0;
@@ -157,12 +157,12 @@
         summaryData["TOTAL"].total += amt;
       });
 
+      // Refunds (separate)
       refunds.forEach(r => {
-        const method = r.PaymentTypeId ? typeMap[r.PaymentTypeId] : "Refund";
         const amt = Number(r.Amount) || 0;
-        if(!summaryData[method]) summaryData[method] = { count:0, total:0 };
-        summaryData[method].count++;
-        summaryData[method].total -= amt;
+        if(!summaryData["Refund"]) summaryData["Refund"] = { count:0, total:0 };
+        summaryData["Refund"].count++;
+        summaryData["Refund"].total += amt;
 
         summaryData["TOTAL"].total -= amt;
       });
