@@ -83,6 +83,13 @@
       "PaymentTypeId": null,
       "DateCreated": "2025-09-20 11:14:08.7228744",
       "Type": "Refund"
+    },
+    {
+      "Id": 30,
+      "Amount": 26000,
+      "PaymentTypeId": 1,
+      "DateCreated": "2025-09-20 15:28:26.1696958",
+      "Type": "Sale"
     }
   ]
 }
