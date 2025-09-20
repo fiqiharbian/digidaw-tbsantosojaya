@@ -1983,7 +1983,7 @@
     "Id": 331,
     "Name": "Benang Jagung",
     "Price": 3000.0,
-    "Quantity": 0
+    "Quantity": -1
   },
   {
     "Id": 332,
@@ -3355,7 +3355,7 @@
   },
   {
     "Id": 560,
-    "Name": "Paku kecil (per Kg)",
+    "Name": "Paku Ecer",
     "Price": 20000.0,
     "Quantity": 0
   },
@@ -3392,7 +3392,7 @@
   {
     "Id": 566,
     "Name": "Semen Ecer (per Kg)",
-    "Price": 1340.0,
+    "Price": 2000.0,
     "Quantity": null
   },
   {
@@ -3585,7 +3585,7 @@
     "Id": 598,
     "Name": "Dcota Kran 3/4\" Stainless DCL",
     "Price": 35000.0,
-    "Quantity": 0
+    "Quantity": -1
   },
   {
     "Id": 599,
@@ -5823,7 +5823,7 @@
     "Id": 971,
     "Name": "Kuku Macan Uk. 20 (per batang)",
     "Price": 2500.0,
-    "Quantity": 0
+    "Quantity": -6
   },
   {
     "Id": 972,
@@ -7826,8 +7826,8 @@
   {
     "Id": 1305,
     "Name": "DCOTA LAKBAN PIPA SEALTAPE",
-    "Price": 0.0,
-    "Quantity": 0
+    "Price": 5000.0,
+    "Quantity": -1
   },
   {
     "Id": 1306,
@@ -13030,5 +13030,23 @@
     "Name": "SIGNATURE PANORAMA DECO GRIS 50 X 50",
     "Price": 55000.0,
     "Quantity": null
+  },
+  {
+    "Id": 2173,
+    "Name": "DCOTA SELANG FLEKSIBEL 40CM",
+    "Price": 36000.0,
+    "Quantity": -1
+  },
+  {
+    "Id": 2174,
+    "Name": "Kawat Ayakan Pasir Gulung",
+    "Price": 85000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2175,
+    "Name": "Kawat Ayakan Pasir Meteran",
+    "Price": 10000.0,
+    "Quantity": -1
   }
 ]
