@@ -37,6 +37,18 @@
       "Amount": 285000,
       "PaymentTypeId": 1,
       "DateCreated": "2025-09-19 15:19:59.7663512"
+    },
+    {
+      "Id": 5,
+      "Amount": 95000,
+      "PaymentTypeId": 1,
+      "DateCreated": "2025-09-20 11:06:35.6778568"
+    },
+    {
+      "Id": 6,
+      "Amount": 1550000,
+      "PaymentTypeId": 1,
+      "DateCreated": "2025-09-20 11:07:52.0956639"
     }
   ],
   "Refund": [
@@ -44,6 +56,12 @@
       "Id": 23,
       "Amount": 95000,
       "DateCreated": "2025-09-19 15:47:26.8304274",
+      "Type": "Refund"
+    },
+    {
+      "Id": 25,
+      "Amount": 95000,
+      "DateCreated": "2025-09-20 11:06:35.701279",
       "Type": "Refund"
     }
   ]
