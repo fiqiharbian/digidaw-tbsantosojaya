@@ -3517,8 +3517,8 @@
   },
   {
     "Id": 587,
-    "Name": "Dcota Foot Klep HAPUS",
-    "Price": 20000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
@@ -3901,7 +3901,7 @@
   },
   {
     "Id": 651,
-    "Name": "Dcota Selang Shower - SWD 03 C HAPUS",
+    "Name": "-",
     "Price": 105000.0,
     "Quantity": 0
   },
@@ -3913,7 +3913,7 @@
   },
   {
     "Id": 653,
-    "Name": "hapusDcota Kran Tembok - DDT 01 SET",
+    "Name": "-",
     "Price": 185000.0,
     "Quantity": 0
   },
@@ -6829,31 +6829,31 @@
   },
   {
     "Id": 1139,
-    "Name": "Kitalon 3/4\" Pipa (AW)",
+    "Name": "Kitalon Pipa 3/4\" (AW)",
     "Price": 22000.0,
     "Quantity": 50
   },
   {
     "Id": 1140,
-    "Name": "Kitalon 2\" Pipa (AW)",
+    "Name": "Kitalon Pipa 2\" (AW)",
     "Price": 65000.0,
     "Quantity": 25
   },
   {
     "Id": 1141,
-    "Name": "Kitalon 2 1/2\" Pipa (AW)",
+    "Name": "Kitalon Pipa 2 1/2\" (AW)",
     "Price": 85000.0,
     "Quantity": 50
   },
   {
     "Id": 1142,
-    "Name": "Kitalon 3\" Pipa (AW)",
+    "Name": "Kitalon Pipa 3\" (AW)",
     "Price": 115000.0,
     "Quantity": 0
   },
   {
     "Id": 1143,
-    "Name": "Kitalon 4\" Pipa (AW)",
+    "Name": "Kitalon Pipa 4\" (AW)",
     "Price": 195000.0,
     "Quantity": 10
   },
@@ -6865,37 +6865,37 @@
   },
   {
     "Id": 1145,
-    "Name": "Kitalon 1 1/2\" Pipa (D)",
+    "Name": "Kitalon Pipa 1 1/2\" (D)",
     "Price": 40000.0,
     "Quantity": 50
   },
   {
     "Id": 1146,
-    "Name": "Kitalon 1 1/4\" Pipa (D)",
+    "Name": "Kitalon Pipa 1 1/4\" (D)",
     "Price": 35000.0,
     "Quantity": 50
   },
   {
     "Id": 1147,
-    "Name": "Kitalon 2\" Pipa (D)",
+    "Name": "Kitalon Pipa 2\" (D)",
     "Price": 43000.0,
     "Quantity": 50
   },
   {
     "Id": 1148,
-    "Name": "Kitalon 2 1/2\" Pipa (D)",
+    "Name": "Kitalon Pipa 2 1/2\" (D)",
     "Price": 55000.0,
     "Quantity": 100
   },
   {
     "Id": 1149,
-    "Name": "Kitalon 3\" Pipa (D)",
+    "Name": "Kitalon Pipa 3\" (D)",
     "Price": 70000.0,
     "Quantity": 400
   },
   {
     "Id": 1150,
-    "Name": "Kitalon 4\" Pipa (D)",
+    "Name": "Kitalon Pipa 4\" (D)",
     "Price": 110000.0,
     "Quantity": 100
   },
@@ -6943,98 +6943,98 @@
   },
   {
     "Id": 1158,
-    "Name": "Quad 1/2\" Pipa AW",
-    "Price": 18000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1159,
-    "Name": "Quad 3/4\" Pipa AW",
-    "Price": 25000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1160,
-    "Name": "Quad 1\" Pipa AW",
-    "Price": 35000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1161,
-    "Name": "Quad 1 1/4\" Pipa AW",
-    "Price": 50000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1162,
-    "Name": "Quad 1 1/2\" Pipa AW",
-    "Price": 55000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1163,
-    "Name": "Quad 2\" Pipa AW",
-    "Price": 70000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1164,
-    "Name": "Quad 2 1/2\" Pipa AW",
-    "Price": 100000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1165,
-    "Name": "Quad 3\" Pipa AW",
-    "Price": 135000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1166,
-    "Name": "Quad 4\" Pipa AW",
-    "Price": 230000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1167,
-    "Name": "Quad 5\" Pipa AW",
-    "Price": 390000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1168,
-    "Name": "Quad 1 1/4\" Pipa D",
-    "Price": 30000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1169,
-    "Name": "Quad 1 1/2\" Pipa D",
-    "Price": 35000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1170,
-    "Name": "Quad 2\" Pipa D",
-    "Price": 45000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1171,
-    "Name": "Quad 2 1/2\" Pipa D",
-    "Price": 60000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1172,
-    "Name": "Quad 3\" Pipa D",
-    "Price": 75000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1173,
-    "Name": "Quad 4\" Pipa D",
-    "Price": 120000.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
@@ -7423,8 +7423,8 @@
   },
   {
     "Id": 1238,
-    "Name": "Amplas Meteran 1/4m hapus",
-    "Price": 2500.0,
+    "Name": "-",
+    "Price": 0.0,
     "Quantity": 0
   },
   {
@@ -7651,25 +7651,25 @@
   },
   {
     "Id": 1276,
-    "Name": "hapusDCOTA Kran Tembok 1/2\" DC",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1277,
-    "Name": "hapusDCOTA Kran Tembok 3/4\" DC",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1278,
-    "Name": "hapusDCOTA Kran Tembok 1/2\" DCL",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1279,
-    "Name": "hapusDCOTA Kran Tembok 3/4\" DCL",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
@@ -7695,7 +7695,7 @@
     "Id": 1283,
     "Name": "DCOTA KRAN CABANG 1/2\" DDT 01",
     "Price": 0.0,
-    "Quantity": 0
+    "Quantity": null
   },
   {
     "Id": 1284,
@@ -7741,13 +7741,13 @@
   },
   {
     "Id": 1291,
-    "Name": "hapusDCOTA KRAN PLASTIK HITAM 1/2\" D-RES",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1292,
-    "Name": "hapusDCOTA KRAN PLASTIK HITAM 3/4\" D-RES",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
@@ -7939,19 +7939,19 @@
   },
   {
     "Id": 1324,
-    "Name": "DCOTA TUSEN KLEP 1/2\" hapus",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1325,
-    "Name": "DCOTA TUSEN KLEP 3/4\" hapus",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1326,
-    "Name": "DCOTA TUSEN KLEP 1\" hapus",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 0
   },
@@ -8127,7 +8127,7 @@
     "Id": 1355,
     "Name": "Supramas T 3\" (D)",
     "Price": 20000.0,
-    "Quantity": 20
+    "Quantity": null
   },
   {
     "Id": 1356,
@@ -9109,49 +9109,49 @@
   },
   {
     "Id": 1519,
-    "Name": "QUAD 2 1/2\" PIPA AW",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 65
   },
   {
     "Id": 1520,
-    "Name": "QUAD 3/4\" PIPA AW",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 42
   },
   {
     "Id": 1521,
-    "Name": "QUAD 3\" PIPA AW",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 40
   },
   {
     "Id": 1522,
-    "Name": "QUAD 3\" PIPA D",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 117
   },
   {
     "Id": 1523,
-    "Name": "QUAD 2 1/2\" PIPA D",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 195
   },
   {
     "Id": 1524,
-    "Name": "QUAD 5\" PIPA D",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 8
   },
   {
     "Id": 1525,
-    "Name": "QUAD 1 1/2\" PIPA D",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 24
   },
   {
     "Id": 1526,
-    "Name": "QUAD 2\" PIPA D",
+    "Name": "-",
     "Price": 0.0,
     "Quantity": 24
   },
@@ -10243,91 +10243,91 @@
   },
   {
     "Id": 1708,
-    "Name": "Wavin Pipa AW 4\" 4m",
+    "Name": "Wavin Pipa 4\" 4m AW",
     "Price": 310000.0,
     "Quantity": 0
   },
   {
     "Id": 1709,
-    "Name": "Wavin Pipa D 4\" 4m",
+    "Name": "Wavin Pipa 4\" 4m D",
     "Price": 155000.0,
     "Quantity": 0
   },
   {
     "Id": 1710,
-    "Name": "Wavin Pipa AW 3\" 4m",
+    "Name": "Wavin Pipa 3\" 4m AW",
     "Price": 175000.0,
     "Quantity": 46
   },
   {
     "Id": 1711,
-    "Name": "Wavin Pipa D 3\" 4m",
+    "Name": "Wavin Pipa 3\" 4m D",
     "Price": 100000.0,
     "Quantity": 241
   },
   {
     "Id": 1712,
-    "Name": "Wavin Pipa AW 2 1/2\" 4m",
+    "Name": "Wavin Pipa 2 1/2\" 4m AW",
     "Price": 125000.0,
     "Quantity": 0
   },
   {
     "Id": 1713,
-    "Name": "Wavin Pipa D 2 1/2\" 4m",
+    "Name": "Wavin Pipa 2 1/2\" 4m D",
     "Price": 75000.0,
     "Quantity": 206
   },
   {
     "Id": 1714,
-    "Name": "Wavin Pipa AW 2\" 4m",
+    "Name": "Wavin Pipa 2\" 4m AW",
     "Price": 85000.0,
     "Quantity": 0
   },
   {
     "Id": 1715,
-    "Name": "Wavin Pipa D 2\" 4m",
+    "Name": "Wavin Pipa 2\" 4m D",
     "Price": 55000.0,
     "Quantity": 9
   },
   {
     "Id": 1716,
-    "Name": "Wavin Pipa AW 1 1/2\" 4m",
+    "Name": "Wavin Pipa 1 1/2\" 4m AW",
     "Price": 65000.0,
     "Quantity": 12
   },
   {
     "Id": 1717,
-    "Name": "Wavin Pipa D 1 1/2\" 4m",
+    "Name": "Wavin Pipa 1 1/2\" 4m D",
     "Price": 45000.0,
     "Quantity": 0
   },
   {
     "Id": 1718,
-    "Name": "Wavin Pipa AW 1 1/4\" 4m",
+    "Name": "Wavin Pipa 1 1/4\" 4m AW",
     "Price": 60000.0,
     "Quantity": 0
   },
   {
     "Id": 1719,
-    "Name": "Wavin Pipa D 1 1/4\" 4m",
+    "Name": "Wavin Pipa 1 1/4\" 4m D",
     "Price": 0.0,
     "Quantity": 0
   },
   {
     "Id": 1720,
-    "Name": "Wavin Pipa AW 1\" 4m",
+    "Name": "Wavin Pipa 1\" 4m AW",
     "Price": 40000.0,
     "Quantity": 72
   },
   {
     "Id": 1721,
-    "Name": "Wavin Pipa AW 3/4\" 4m",
+    "Name": "Wavin Pipa 3/4\" 4m AW",
     "Price": 30000.0,
     "Quantity": 190
   },
   {
     "Id": 1722,
-    "Name": "Wavin Pipa AW 1/2\" 4m",
+    "Name": "Wavin Pipa 1/2\" 4m AW",
     "Price": 23000.0,
     "Quantity": 70
   },
@@ -12583,7 +12583,7 @@
   },
   {
     "Id": 2098,
-    "Name": "RUCIKA PIPA AW 2 1/2\"",
+    "Name": "Rucika Pipa 2 1/2\" AW",
     "Price": 0.0,
     "Quantity": 39
   },
@@ -12591,13 +12591,13 @@
     "Id": 2099,
     "Name": "Broco Fitting Lampu Hitam",
     "Price": 10000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2100,
     "Name": "Jek Kabel Hias / Soket Lampu Hias",
     "Price": 15000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2101,
@@ -12609,23 +12609,23 @@
     "Id": 2102,
     "Name": "Amplas Lembaran",
     "Price": 5000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2103,
     "Name": "Jebakan Tikus Kurung",
     "Price": 25000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2104,
     "Name": "Jebakan Tikus Jepit",
     "Price": 15000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2105,
-    "Name": "Radar Otomatis Pompa ST-70AB hapus",
+    "Name": "-",
     "Price": 55000.0,
     "Quantity": 30
   },
@@ -12633,25 +12633,25 @@
     "Id": 2106,
     "Name": "Walpanel WKP35 (GS10*150*2.90M)",
     "Price": 95000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2107,
     "Name": "Walpanel WKP02 (GS10*150*2.90M)",
     "Price": 95000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2108,
     "Name": "Walpanel WKP12 (GS23*160*3M)",
     "Price": 95000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2109,
     "Name": "Walpanel WH002 (GS23*160*2.90M)",
     "Price": 95000.0,
-    "Quantity": null
+    "Quantity": 0
   },
   {
     "Id": 2110,
@@ -13053,6 +13053,114 @@
     "Id": 2176,
     "Name": "Benang jagung pak",
     "Price": 20000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2178,
+    "Name": "-",
+    "Price": 25000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2191,
+    "Name": "-",
+    "Price": 75000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2193,
+    "Name": "Quad Pipa 1/2\" AW",
+    "Price": 18000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2194,
+    "Name": "Quad Pipa 3/4\" AW",
+    "Price": 25000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2195,
+    "Name": "Quad Pipa 1\" AW",
+    "Price": 35000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2196,
+    "Name": "Quad Pipa 1 1/4\" AW",
+    "Price": 50000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2197,
+    "Name": "Quad Pipa 1 1/2\" AW",
+    "Price": 55000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2198,
+    "Name": "Quad Pipa 2\" AW",
+    "Price": 70000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2199,
+    "Name": "Quad Pipa 2 1/2\" AW",
+    "Price": 100000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2200,
+    "Name": "Quad Pipa 3\" AW",
+    "Price": 135000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2201,
+    "Name": "Quad Pipa 4\" AW",
+    "Price": 230000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2202,
+    "Name": "Quad Pipa 5\" AW",
+    "Price": 390000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2203,
+    "Name": "Quad Pipa 1 1/4\" D",
+    "Price": 30000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2204,
+    "Name": "Quad Pipa 1 1/2\" D",
+    "Price": 35000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2205,
+    "Name": "Quad Pipa 2\" D",
+    "Price": 45000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2206,
+    "Name": "Quad Pipa 2 1/2\" D",
+    "Price": 60000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2207,
+    "Name": "Quad Pipa 3\" D",
+    "Price": 75000.0,
+    "Quantity": null
+  },
+  {
+    "Id": 2208,
+    "Name": "Quad Pipa 4\" D",
+    "Price": 120000.0,
     "Quantity": null
   }
 ]
