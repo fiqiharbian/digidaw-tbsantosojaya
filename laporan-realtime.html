@@ -47,7 +47,6 @@
   <script>
     const DateTime = luxon.DateTime;
 
-    // Subtitle: current Jakarta time
     function updateTime() {
       const now = DateTime.now().setZone("Asia/Jakarta");
       document.getElementById("subtitle").textContent =
@@ -68,46 +67,38 @@
         const res = await axios.get("Transactions.json");
         const data = res.data;
 
-        const payments = (data.Payment || []).map(p => ({...p, Type: "Sale"}));
-        const refunds = (data.Refund || []).map(r => ({...r, Type: "Refund"}));
         const paymentTypes = data.PaymentType || [];
-
         const typeMap = {};
         paymentTypes.forEach(pt => typeMap[pt.Id] = pt.Name);
 
         const todayStr = DateTime.now().setZone("Asia/Jakarta").toFormat("yyyy-LL-dd");
 
-        const todayPayments = payments.filter(p => {
+        const allTransactions = (data.Payment || []).filter(p => {
           const dt = parseISO(p.DateCreated);
           return dt && dt.toFormat("yyyy-LL-dd") === todayStr;
         });
 
-        const todayRefunds = refunds.filter(r => {
-          const dt = parseISO(r.DateCreated);
-          return dt && dt.toFormat("yyyy-LL-dd") === todayStr;
-        });
-
-        renderTable(todayPayments, todayRefunds, typeMap);
-        renderSummary(todayPayments, todayRefunds, typeMap);
+        renderTable(allTransactions, typeMap);
+        renderSummary(allTransactions, typeMap);
 
       } catch(err) {
         console.error("Error loading Transactions.json:", err);
       }
     }
 
-    function renderTable(payments, refunds, typeMap) {
+    function renderTable(transactions, typeMap) {
       const tbody = document.getElementById("transactions");
       tbody.innerHTML = "";
 
       let counter = 1;
 
-      const all = [...payments, ...refunds].sort((a,b) => {
+      transactions.sort((a,b) => {
         const da = parseISO(a.DateCreated);
         const db = parseISO(b.DateCreated);
         return da && db ? da.toMillis() - db.toMillis() : 0;
       });
 
-      all.forEach(p => {
+      transactions.forEach(p => {
         const dt = parseISO(p.DateCreated);
         const jam = dt ? dt.toFormat("HH:mm") : "-";
 
@@ -135,36 +126,25 @@
         tbody.appendChild(tr);
       });
 
-      if(all.length === 0) {
+      if(transactions.length === 0) {
         const tr = document.createElement("tr");
         tr.innerHTML = `<td colspan="5" class="p-2 border-b text-center">Tidak ada transaksi hari ini</td>`;
         tbody.appendChild(tr);
       }
     }
 
-    function renderSummary(payments, refunds, typeMap) {
+    function renderSummary(transactions, typeMap) {
       const summaryData = { TOTAL: { count:0, total:0 } };
 
-      // Sales
-      payments.forEach(p => {
-        const method = typeMap[p.PaymentTypeId] || "Lainnya";
+      transactions.forEach(p => {
+        const method = p.Type === "Refund" ? "Refund" : typeMap[p.PaymentTypeId] || "Lainnya";
         const amt = Number(p.Amount) || 0;
         if(!summaryData[method]) summaryData[method] = { count:0, total:0 };
         summaryData[method].count++;
         summaryData[method].total += amt;
 
         summaryData["TOTAL"].count++;
-        summaryData["TOTAL"].total += amt;
-      });
-
-      // Refunds (separate)
-      refunds.forEach(r => {
-        const amt = Number(r.Amount) || 0;
-        if(!summaryData["Refund"]) summaryData["Refund"] = { count:0, total:0 };
-        summaryData["Refund"].count++;
-        summaryData["Refund"].total += amt;
-
-        summaryData["TOTAL"].total -= amt;
+        summaryData["TOTAL"].total += (p.Type === "Refund" ? -amt : amt);
       });
 
       const sumBody = document.getElementById("summary");
