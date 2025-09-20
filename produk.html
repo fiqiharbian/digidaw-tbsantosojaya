@@ -7,7 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 p-6">
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-7xl mx-auto">
     <h1 class="text-3xl font-bold mb-6">Daftar Barang</h1>
 
     <!-- Search -->
@@ -29,6 +29,7 @@
             <th class="p-2 border-b">Nama Produk</th>
             <th class="p-2 border-b">Harga Jual</th>
             <th class="p-2 border-b">Harga Beli</th>
+            <th class="p-2 border-b">Keuntungan</th>
             <th class="p-2 border-b">Stok</th>
           </tr>
         </thead>
@@ -73,12 +74,19 @@
       const pageItems = filteredProducts.slice(start, end);
 
       pageItems.forEach(item => {
+        const hargaJual = Number(item.Price) || 0;
+        const hargaBeli = Number(item.Cost) || 0;
+        const keuntungan = hargaJual - hargaBeli;
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td class="p-2 border-b">${item.Id}</td>
           <td class="p-2 border-b">${item.Name}</td>
-          <td class="p-2 border-b">Rp ${Number(item.Price).toLocaleString("id-ID")}</td>
-          <td class="p-2 border-b">Rp ${Number(item.Cost).toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b">Rp ${hargaJual.toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b">Rp ${hargaBeli.toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b font-semibold ${keuntungan < 0 ? 'text-red-600' : 'text-green-600'}">
+            Rp ${keuntungan.toLocaleString("id-ID")}
+          </td>
           <td class="p-2 border-b">${item.Quantity ?? 0}</td>
         `;
         tbody.appendChild(tr);
