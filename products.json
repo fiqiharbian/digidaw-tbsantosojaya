@@ -5973,7 +5973,7 @@
     "Id": 996,
     "Name": "Avitex 040 Cream Cat Tembok 5Kg",
     "Price": 160000.0,
-    "Quantity": 0
+    "Quantity": -10
   },
   {
     "Id": 997,
@@ -7635,7 +7635,7 @@
     "Id": 1273,
     "Name": "Pegangan Solvex 50cm",
     "Price": 95000.0,
-    "Quantity": 8
+    "Quantity": 9
   },
   {
     "Id": 1274,
