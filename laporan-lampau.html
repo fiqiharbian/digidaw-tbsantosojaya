@@ -61,8 +61,7 @@
 
   <script>
     const DateTime = luxon.DateTime;
-    let payments = [];
-    let refunds = [];
+    let transactions = [];
     let paymentTypes = [];
     let paymentTypesMap = {};
 
@@ -71,13 +70,18 @@
         const res = await axios.get("Transactions.json");
         const data = res.data;
 
-        payments = (data.Payment || []).map(p => ({...p, Type:"Payment"}));
-        refunds = (data.Refund || []).map(r => ({
-          ...r,
-          Type: "Refund",
-          Amount: -Number(r.Amount),
-          Id: "-" // no number for refund
-        }));
+        // Semua transaksi ada di data.Payment
+        transactions = (data.Payment || []).map(p => {
+          if(p.Type === "Refund"){
+            return {
+              ...p,
+              Amount: -Number(p.Amount), // negatif untuk refund
+              Id: "-" // no number
+            };
+          }
+          return {...p};
+        });
+
         paymentTypes = data.PaymentType || [];
         paymentTypes.forEach(pt => paymentTypesMap[pt.Id] = pt.Name);
 
@@ -94,11 +98,10 @@
     }
 
     function filterByDate(start, end=null) {
-      const allTransactions = [...payments, ...refunds];
       const startDate = DateTime.fromISO(start).startOf("day");
       const endDate = end ? DateTime.fromISO(end).endOf("day") : startDate.endOf("day");
 
-      return allTransactions.filter(t => {
+      return transactions.filter(t => {
         const dt = parseDateTime(t.DateCreated);
         return dt && dt >= startDate && dt <= endDate;
       });
