@@ -12,13 +12,14 @@
     <h1 class="text-3xl font-bold mb-2">Transaksi Hari Ini</h1>
     <p id="subtitle" class="text-gray-600 mb-6"></p>
 
-    <div class="overflow-x-auto bg-white rounded-xl shadow p-4">
+    <!-- Table transaksi -->
+    <div class="overflow-x-auto bg-white rounded-xl shadow p-4 mb-6">
       <table class="min-w-full border-collapse">
         <thead>
           <tr class="bg-gray-100 text-left">
             <th class="p-2 border-b">No. Nota</th>
             <th class="p-2 border-b">Total Belanja</th>
-            <th class="p-2 border-b">Metode / Type</th>
+            <th class="p-2 border-b">Metode</th>
             <th class="p-2 border-b">Waktu</th>
           </tr>
         </thead>
@@ -26,24 +27,26 @@
       </table>
     </div>
 
-    <!-- Summary Table -->
-    <div class="overflow-x-auto bg-white rounded-xl shadow p-4 mt-6">
+    <!-- Ringkasan -->
+    <div class="overflow-x-auto bg-white rounded-xl shadow p-4">
+      <h2 class="text-xl font-semibold mb-4">Ringkasan Transaksi</h2>
       <table class="min-w-full border-collapse">
         <thead>
           <tr class="bg-gray-100 text-left">
-            <th class="p-2 border-b">Metode / Type</th>
+            <th class="p-2 border-b">Metode</th>
             <th class="p-2 border-b">Total Transaksi</th>
+            <th class="p-2 border-b">Nominal (Rp)</th>
           </tr>
         </thead>
         <tbody id="summary"></tbody>
       </table>
-      <div id="overallTotal" class="text-right font-bold mt-2"></div>
     </div>
   </div>
 
   <script>
     const DateTime = luxon.DateTime;
 
+    // Subtitle: current Jakarta time
     function updateTime() {
       const now = DateTime.now().setZone("Asia/Jakarta");
       document.getElementById("subtitle").textContent =
@@ -52,84 +55,118 @@
     setInterval(updateTime, 1000);
     updateTime();
 
-    function parseDateTime(dateStr) {
-      if (!dateStr) return null;
-      let iso = dateStr.replace(" ", "T").replace(/(\.\d{6})\d*/, "$1");
-      return DateTime.fromISO(iso, { zone: "Asia/Jakarta" });
-    }
-
     async function loadData() {
       try {
         const res = await axios.get("Transactions.json");
         const data = res.data;
 
-        const payments = (data.Payment || []).map(p => ({...p, Type: "Payment"}));
-        const refunds = (data.Refund || []).map(r => ({...r, Type: "Refund", Amount: -r.Amount}));
+        const payments = data.Payment || [];
+        const paymentTypes = data.PaymentType || [];
+        const refunds = data.Refund || [];
 
-        const allTransactions = [...payments, ...refunds];
-
-        // PaymentTypeId -> Name map
+        // Build PaymentTypeId -> Name map
         const typeMap = {};
-        (data.PaymentType || []).forEach(pt => typeMap[pt.Id] = pt.Name);
+        paymentTypes.forEach(pt => typeMap[pt.Id] = pt.Name);
 
-        const tbody = document.getElementById("transactions");
-        tbody.innerHTML = "";
+        // Filter: only today's transactions (Jakarta time)
+        const today = DateTime.now().setZone("Asia/Jakarta").toFormat("yyyy-LL-dd");
 
-        allTransactions.sort((a,b) => new Date(a.DateCreated) - new Date(b.DateCreated));
-
-        let paymentCounter = 1;
-        allTransactions.forEach(p => {
-          const tr = document.createElement("tr");
-          if (p.Type === "Refund") {
-            tr.className = "text-red-600";
-            tr.innerHTML = `
-              <td class="p-2 border-b">-</td>
-              <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-              <td class="p-2 border-b">Refund</td>
-              <td class="p-2 border-b">${parseDateTime(p.DateCreated)?.toFormat("HH:mm") || "-"}</td>
-            `;
-          } else {
-            tr.innerHTML = `
-              <td class="p-2 border-b">${paymentCounter++}</td>
-              <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-              <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
-              <td class="p-2 border-b">${parseDateTime(p.DateCreated)?.toFormat("HH:mm") || "-"}</td>
-            `;
-          }
-          tbody.appendChild(tr);
+        const todayPayments = payments.filter(p => {
+          const d = DateTime.fromISO(p.DateCreated, { zone: "Asia/Jakarta" });
+          return d.toFormat("yyyy-LL-dd") === today;
         });
 
-        // --- Summary table ---
-        const summary = {};
-        let overall = 0;
-
-        allTransactions.forEach(p => {
-          const key = p.Type === "Payment" ? (typeMap[p.PaymentTypeId] || "Unknown") : "Refund";
-          summary[key] = (summary[key] || 0) + Number(p.Amount);
-          overall += Number(p.Amount);
+        const todayRefunds = refunds.filter(r => {
+          const d = DateTime.fromISO(r.DateCreated, { zone: "Asia/Jakarta" });
+          return d.toFormat("yyyy-LL-dd") === today;
         });
 
-        const summaryTbody = document.getElementById("summary");
-        summaryTbody.innerHTML = "";
-        Object.entries(summary).forEach(([k,v]) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td class="p-2 border-b">${k}</td>
-            <td class="p-2 border-b">Rp ${v.toLocaleString("id-ID")}</td>
-          `;
-          summaryTbody.appendChild(tr);
-        });
-
-        document.getElementById("overallTotal").textContent =
-          `Total Keseluruhan: Rp ${overall.toLocaleString("id-ID")}`;
+        renderTable(todayPayments, todayRefunds, typeMap);
+        renderSummary(todayPayments, todayRefunds, typeMap);
 
       } catch (err) {
         console.error("Error loading Transactions.json:", err);
       }
     }
 
+    function renderTable(payments, refunds, typeMap) {
+      const tbody = document.getElementById("transactions");
+      tbody.innerHTML = "";
+
+      // Render payments
+      payments.forEach(p => {
+        const dateObj = DateTime.fromISO(p.DateCreated, { zone: "Asia/Jakarta" });
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="p-2 border-b">${p.Id}</td>
+          <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
+          <td class="p-2 border-b">${dateObj.toFormat("HH:mm")}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Render refunds (in red, no No. Nota)
+      refunds.forEach(r => {
+        const dateObj = DateTime.fromISO(r.DateCreated, { zone: "Asia/Jakarta" });
+        const tr = document.createElement("tr");
+        tr.classList.add("text-red-600", "font-semibold");
+        tr.innerHTML = `
+          <td class="p-2 border-b"></td>
+          <td class="p-2 border-b">Rp ${Number(r.Amount).toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b">REFUND</td>
+          <td class="p-2 border-b">${dateObj.toFormat("HH:mm")}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      if (payments.length === 0 && refunds.length === 0) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td colspan="4" class="p-2 border-b text-center">Tidak ada transaksi hari ini</td>`;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function renderSummary(payments, refunds, typeMap) {
+      const summaryData = { TOTAL: { count: 0, total: 0 } };
+
+      // Add sales
+      payments.forEach(p => {
+        const method = typeMap[p.PaymentTypeId] || "Lainnya";
+        const amt = Number(p.Amount) || 0;
+        if (!summaryData[method]) summaryData[method] = { count: 0, total: 0 };
+        summaryData[method].count++;
+        summaryData[method].total += amt;
+        summaryData["TOTAL"].count++;
+        summaryData["TOTAL"].total += amt;
+      });
+
+      // Subtract refunds
+      refunds.forEach(r => {
+        const amt = Number(r.Amount) || 0;
+        if (!summaryData["REFUND"]) summaryData["REFUND"] = { count: 0, total: 0 };
+        summaryData["REFUND"].count++;
+        summaryData["REFUND"].total -= amt;
+        summaryData["TOTAL"].total -= amt;
+      });
+
+      const sumBody = document.getElementById("summary");
+      sumBody.innerHTML = "";
+
+      Object.keys(summaryData).forEach(m => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="p-2 border-b font-semibold">${m}</td>
+          <td class="p-2 border-b">${summaryData[m].count}</td>
+          <td class="p-2 border-b">Rp ${summaryData[m].total.toLocaleString("id-ID")}</td>
+        `;
+        if (m === "REFUND") row.classList.add("text-red-600");
+        sumBody.appendChild(row);
+      });
+    }
+
     loadData();
-    setInterval(loadData, 60000);
+    setInterval(loadData, 60000); // refresh every 60s
   </script>
 </body>
 </html>
