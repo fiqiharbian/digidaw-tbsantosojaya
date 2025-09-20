@@ -111,6 +111,13 @@
       "PaymentTypeId": 1,
       "DateCreated": "2025-09-20 16:12:32.1061759",
       "Type": "Sale"
+    },
+    {
+      "Id": 37,
+      "Amount": 5000,
+      "PaymentTypeId": 1,
+      "DateCreated": "2025-09-20 16:13:46.3458569",
+      "Type": "Sale"
     }
   ]
 }
