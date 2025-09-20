@@ -18,77 +18,94 @@
       "Id": 1,
       "Amount": 95000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-19 12:49:06.2801226"
+      "DateCreated": "2025-09-19 12:49:06.2801226",
+      "Type": "Sale"
     },
     {
       "Id": 2,
       "Amount": 95000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-19 12:51:02.9938613"
+      "DateCreated": "2025-09-19 12:51:02.9938613",
+      "Type": "Sale"
     },
     {
       "Id": 3,
       "Amount": 160000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-19 13:07:36.1538059"
+      "DateCreated": "2025-09-19 13:07:36.1538059",
+      "Type": "Sale"
     },
     {
       "Id": 4,
       "Amount": 285000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-19 15:19:59.7663512"
+      "DateCreated": "2025-09-19 15:19:59.7663512",
+      "Type": "Sale"
     },
     {
       "Id": 5,
       "Amount": 95000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-20 11:06:35.6778568"
+      "DateCreated": "2025-09-20 11:06:35.6778568",
+      "Type": "Sale"
     },
     {
       "Id": 6,
       "Amount": 1550000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-20 11:07:52.0956639"
+      "DateCreated": "2025-09-20 11:07:52.0956639",
+      "Type": "Sale"
     },
     {
       "Id": 7,
       "Amount": 1550000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-20 11:09:23.5791086"
+      "DateCreated": "2025-09-20 11:09:23.5791086",
+      "Type": "Sale"
     },
     {
       "Id": 8,
       "Amount": 1600000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-20 11:10:46.7437108"
+      "DateCreated": "2025-09-20 11:10:46.7437108",
+      "Type": "Sale"
     },
     {
       "Id": 9,
       "Amount": 480000,
       "PaymentTypeId": 1,
-      "DateCreated": "2025-09-20 11:14:08.7218591"
+      "DateCreated": "2025-09-20 11:14:08.7218591",
+      "Type": "Sale"
     }
   ],
   "Refund": [
     {
       "Id": "-",
-      "Amount": 95000.0,
-      "DateCreated": "2025-09-19 15:47:26.8304274"
+      "Amount": 95000,
+      "PaymentTypeId": null,
+      "DateCreated": "2025-09-19 15:47:26.8304274",
+      "Type": "Refund"
     },
     {
       "Id": "-",
-      "Amount": 95000.0,
-      "DateCreated": "2025-09-20 11:06:35.701279"
+      "Amount": 95000,
+      "PaymentTypeId": null,
+      "DateCreated": "2025-09-20 11:06:35.701279",
+      "Type": "Refund"
     },
     {
       "Id": "-",
-      "Amount": 1550000.0,
-      "DateCreated": "2025-09-20 11:09:23.5801271"
+      "Amount": 1550000,
+      "PaymentTypeId": null,
+      "DateCreated": "2025-09-20 11:09:23.5801271",
+      "Type": "Refund"
     },
     {
       "Id": "-",
-      "Amount": 480000.0,
-      "DateCreated": "2025-09-20 11:14:08.7228744"
+      "Amount": 480000,
+      "PaymentTypeId": null,
+      "DateCreated": "2025-09-20 11:14:08.7228744",
+      "Type": "Refund"
     }
   ]
 }
