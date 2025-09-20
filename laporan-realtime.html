@@ -55,30 +55,39 @@
     setInterval(updateTime, 1000);
     updateTime();
 
+    function parseDateTime(dateStr) {
+      if (!dateStr) return null;
+      let iso = dateStr.replace(" ", "T").replace(/(\.\d{6})\d*/, "$1");
+      const dt = DateTime.fromISO(iso, { zone: "Asia/Jakarta" });
+      return dt.isValid ? dt : null;
+    }
+
     async function loadData() {
       try {
         const res = await axios.get("Transactions.json");
         const data = res.data;
 
-        const payments = data.Payment || [];
+        const payments = (data.Payment || []).map(p => ({...p, Type:"Payment"}));
+        const refunds = (data.Refund || []).map(r => ({
+          ...r,
+          Type: "Refund",
+          Amount: -Number(r.Amount),
+          Id: "-" // no number for refund
+        }));
         const paymentTypes = data.PaymentType || [];
-        const refunds = data.Refund || [];
 
-        // Build PaymentTypeId -> Name map
         const typeMap = {};
         paymentTypes.forEach(pt => typeMap[pt.Id] = pt.Name);
 
-        // Filter: only today's transactions (Jakarta time)
+        // Filter: only today's transactions
         const today = DateTime.now().setZone("Asia/Jakarta").toFormat("yyyy-LL-dd");
-
         const todayPayments = payments.filter(p => {
-          const d = DateTime.fromISO(p.DateCreated, { zone: "Asia/Jakarta" });
-          return d.toFormat("yyyy-LL-dd") === today;
+          const dt = parseDateTime(p.DateCreated);
+          return dt && dt.toFormat("yyyy-LL-dd") === today;
         });
-
         const todayRefunds = refunds.filter(r => {
-          const d = DateTime.fromISO(r.DateCreated, { zone: "Asia/Jakarta" });
-          return d.toFormat("yyyy-LL-dd") === today;
+          const dt = parseDateTime(r.DateCreated);
+          return dt && dt.toFormat("yyyy-LL-dd") === today;
         });
 
         renderTable(todayPayments, todayRefunds, typeMap);
@@ -92,62 +101,59 @@
     function renderTable(payments, refunds, typeMap) {
       const tbody = document.getElementById("transactions");
       tbody.innerHTML = "";
+      let counter = 1;
 
-      // Render payments
-      payments.forEach(p => {
-        const dateObj = DateTime.fromISO(p.DateCreated, { zone: "Asia/Jakarta" });
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="p-2 border-b">${p.Id}</td>
-          <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-          <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
-          <td class="p-2 border-b">${dateObj.toFormat("HH:mm")}</td>
-        `;
-        tbody.appendChild(tr);
+      payments.concat(refunds).sort((a,b) => new Date(a.DateCreated) - new Date(b.DateCreated))
+        .forEach(p => {
+          const dt = parseDateTime(p.DateCreated);
+          const timeStr = dt ? dt.toFormat("HH:mm") : "-";
+
+          const tr = document.createElement("tr");
+          if(p.Type === "Refund"){
+            tr.className = "text-red-600 font-semibold";
+            tr.innerHTML = `
+              <td class="p-2 border-b">-</td>
+              <td class="p-2 border-b">Rp ${Math.abs(Number(p.Amount)).toLocaleString("id-ID")}</td>
+              <td class="p-2 border-b">REFUND</td>
+              <td class="p-2 border-b">${timeStr}</td>
+            `;
+          } else {
+            tr.innerHTML = `
+              <td class="p-2 border-b">${counter++}</td>
+              <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+              <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
+              <td class="p-2 border-b">${timeStr}</td>
+            `;
+          }
+          tbody.appendChild(tr);
       });
 
-      // Render refunds (in red, no No. Nota)
-      refunds.forEach(r => {
-        const dateObj = DateTime.fromISO(r.DateCreated, { zone: "Asia/Jakarta" });
-        const tr = document.createElement("tr");
-        tr.classList.add("text-red-600", "font-semibold");
-        tr.innerHTML = `
-          <td class="p-2 border-b"></td>
-          <td class="p-2 border-b">Rp ${Number(r.Amount).toLocaleString("id-ID")}</td>
-          <td class="p-2 border-b">REFUND</td>
-          <td class="p-2 border-b">${dateObj.toFormat("HH:mm")}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      if (payments.length === 0 && refunds.length === 0) {
+      if(payments.length === 0 && refunds.length === 0){
         const tr = document.createElement("tr");
         tr.innerHTML = `<td colspan="4" class="p-2 border-b text-center">Tidak ada transaksi hari ini</td>`;
         tbody.appendChild(tr);
       }
     }
 
-    function renderSummary(payments, refunds, typeMap) {
+    function renderSummary(payments, refunds, typeMap){
       const summaryData = { TOTAL: { count: 0, total: 0 } };
 
-      // Add sales
       payments.forEach(p => {
         const method = typeMap[p.PaymentTypeId] || "Lainnya";
         const amt = Number(p.Amount) || 0;
-        if (!summaryData[method]) summaryData[method] = { count: 0, total: 0 };
+        if(!summaryData[method]) summaryData[method] = { count:0, total:0 };
         summaryData[method].count++;
         summaryData[method].total += amt;
-        summaryData["TOTAL"].count++;
-        summaryData["TOTAL"].total += amt;
+        summaryData.TOTAL.count++;
+        summaryData.TOTAL.total += amt;
       });
 
-      // Subtract refunds
       refunds.forEach(r => {
-        const amt = Number(r.Amount) || 0;
-        if (!summaryData["REFUND"]) summaryData["REFUND"] = { count: 0, total: 0 };
+        const amt = Math.abs(Number(r.Amount)) || 0;
+        if(!summaryData["REFUND"]) summaryData["REFUND"] = { count:0, total:0 };
         summaryData["REFUND"].count++;
-        summaryData["REFUND"].total -= amt;
-        summaryData["TOTAL"].total -= amt;
+        summaryData["REFUND"].total += amt;
+        summaryData.TOTAL.total -= amt;
       });
 
       const sumBody = document.getElementById("summary");
@@ -160,7 +166,7 @@
           <td class="p-2 border-b">${summaryData[m].count}</td>
           <td class="p-2 border-b">Rp ${summaryData[m].total.toLocaleString("id-ID")}</td>
         `;
-        if (m === "REFUND") row.classList.add("text-red-600");
+        if(m === "REFUND") row.classList.add("text-red-600");
         sumBody.appendChild(row);
       });
     }
