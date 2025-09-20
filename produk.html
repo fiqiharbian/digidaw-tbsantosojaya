@@ -27,7 +27,8 @@
           <tr class="bg-gray-100 text-left">
             <th class="p-2 border-b">No</th>
             <th class="p-2 border-b">Nama Produk</th>
-            <th class="p-2 border-b">Harga</th>
+            <th class="p-2 border-b">Harga Jual</th>
+            <th class="p-2 border-b">Harga Beli</th>
             <th class="p-2 border-b">Stok</th>
           </tr>
         </thead>
@@ -77,6 +78,7 @@
           <td class="p-2 border-b">${item.Id}</td>
           <td class="p-2 border-b">${item.Name}</td>
           <td class="p-2 border-b">Rp ${Number(item.Price).toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b">Rp ${Number(item.Cost).toLocaleString("id-ID")}</td>
           <td class="p-2 border-b">${item.Quantity ?? 0}</td>
         `;
         tbody.appendChild(tr);
