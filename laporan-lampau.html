@@ -3,30 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Laporan Lampau</title>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 p-6">
-  <div class="max-w-6xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Laporan Lampau</h1>
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold mb-2">Laporan Lampau</h1>
+    <p id="subtitle" class="text-gray-600 mb-6"></p>
 
-    <!-- Date Selection -->
-    <div class="flex flex-col md:flex-row md:space-x-4 mb-6">
-      <div>
-        <label for="startDate" class="block mb-1 font-semibold">Tanggal Mulai:</label>
-        <input type="date" id="startDate" class="px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-      </div>
-      <div>
-        <label for="endDate" class="block mb-1 font-semibold">Tanggal Akhir (opsional):</label>
-        <input type="date" id="endDate" class="px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-      </div>
-      <div class="flex items-end mt-4 md:mt-0">
-        <button id="filterBtn" class="px-4 py-2 rounded-xl bg-blue-600 text-white">Tampilkan</button>
-      </div>
-    </div>
-
-    <!-- Table Transaksi -->
+    <!-- Tabel transaksi -->
     <div class="overflow-x-auto bg-white rounded-xl shadow p-4 mb-6">
       <table class="min-w-full border-collapse">
         <thead>
@@ -34,6 +20,7 @@
             <th class="p-2 border-b">No. Nota</th>
             <th class="p-2 border-b">Total Belanja</th>
             <th class="p-2 border-b">Metode</th>
+            <th class="p-2 border-b">Tanggal</th>
             <th class="p-2 border-b">Waktu</th>
           </tr>
         </thead>
@@ -55,108 +42,102 @@
         <tbody id="summary"></tbody>
       </table>
     </div>
-
   </div>
 
   <script>
     const DateTime = luxon.DateTime;
-    let payments = [];
-    let refunds = [];
-    let paymentTypes = [];
-    let paymentTypesMap = {};
+
+    function updateTime() {
+      const now = DateTime.now().setZone("Asia/Jakarta");
+      document.getElementById("subtitle").textContent =
+        "Diperbarui: " + now.toFormat("cccc, dd LLL yyyy HH:mm:ss");
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
 
     async function loadData() {
       try {
         const res = await axios.get("Transactions.json");
         const data = res.data;
 
-        payments = (data.Payment || []).map(p => ({...p, Type:"Payment"}));
-        refunds = (data.Refund || []).map(r => ({
-          ...r,
-          Type: "Refund",
-          Amount: -Number(r.Amount),
-          Id: "-" // no number for refund
-        }));
-        paymentTypes = data.PaymentType || [];
-        paymentTypes.forEach(pt => paymentTypesMap[pt.Id] = pt.Name);
+        const payments = data.Payment || [];
+        const paymentTypes = data.PaymentType || [];
+        const refunds = data.Refund || [];
 
-      } catch(err) {
-        console.error("Error loading Transactions.json", err);
+        const typeMap = {};
+        paymentTypes.forEach(pt => typeMap[pt.Id] = pt.Name);
+
+        renderTable(payments, refunds, typeMap);
+        renderSummary(payments, refunds, typeMap);
+
+      } catch (err) {
+        console.error("Error loading Transactions.json:", err);
       }
     }
 
-    function parseDateTime(dateStr) {
-      if (!dateStr) return null;
-      let iso = dateStr.replace(" ", "T").replace(/(\.\d{6})\d*/, "$1");
-      const dt = DateTime.fromISO(iso, { zone: "Asia/Jakarta" });
-      return dt.isValid ? dt : null;
+    function formatTanggal(dateObj) {
+      return dateObj.toFormat("cccc, dd LLL. yyyy");
     }
 
-    function filterByDate(start, end=null) {
-      const allTransactions = [...payments, ...refunds];
-      const startDate = DateTime.fromISO(start).startOf("day");
-      const endDate = end ? DateTime.fromISO(end).endOf("day") : startDate.endOf("day");
-
-      return allTransactions.filter(t => {
-        const dt = parseDateTime(t.DateCreated);
-        return dt && dt >= startDate && dt <= endDate;
-      });
-    }
-
-    function renderTable(filtered) {
+    function renderTable(payments, refunds, typeMap) {
       const tbody = document.getElementById("transactions");
       tbody.innerHTML = "";
-      let counter = 1;
 
-      filtered.sort((a,b) => new Date(a.DateCreated) - new Date(b.DateCreated));
-
-      filtered.forEach(p => {
-        const dt = parseDateTime(p.DateCreated);
-        const jam = dt ? dt.toFormat("HH:mm") : "-";
-
+      // Transaksi biasa
+      payments.forEach(p => {
+        const dateObj = DateTime.fromISO(p.DateCreated, { zone: "Asia/Jakarta" });
         const tr = document.createElement("tr");
-
-        if(p.Type === "Refund"){
-          tr.className = "text-red-600";
-          tr.innerHTML = `
-            <td class="p-2 border-b">-</td>
-            <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-            <td class="p-2 border-b">Refund</td>
-            <td class="p-2 border-b">${jam}</td>
-          `;
-        } else {
-          tr.innerHTML = `
-            <td class="p-2 border-b">${counter++}</td>
-            <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
-            <td class="p-2 border-b">${paymentTypesMap[p.PaymentTypeId] || "-"}</td>
-            <td class="p-2 border-b">${jam}</td>
-          `;
-        }
+        tr.innerHTML = `
+          <td class="p-2 border-b">${p.Id}</td>
+          <td class="p-2 border-b">Rp ${Number(p.Amount).toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b">${typeMap[p.PaymentTypeId] || "-"}</td>
+          <td class="p-2 border-b">${formatTanggal(dateObj)}</td>
+          <td class="p-2 border-b">${dateObj.toFormat("HH:mm")}</td>
+        `;
         tbody.appendChild(tr);
       });
 
-      if(filtered.length === 0){
+      // Refund
+      refunds.forEach(r => {
+        const dateObj = DateTime.fromISO(r.DateCreated, { zone: "Asia/Jakarta" });
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td class="p-2 border-b text-center" colspan="4">Tidak ada transaksi pada tanggal ini</td>`;
+        tr.classList.add("text-red-600", "font-semibold");
+        tr.innerHTML = `
+          <td class="p-2 border-b"></td>
+          <td class="p-2 border-b">Rp ${Number(r.Amount).toLocaleString("id-ID")}</td>
+          <td class="p-2 border-b">REFUND</td>
+          <td class="p-2 border-b">${formatTanggal(dateObj)}</td>
+          <td class="p-2 border-b">${dateObj.toFormat("HH:mm")}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      if (payments.length === 0 && refunds.length === 0) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td colspan="5" class="p-2 border-b text-center">Tidak ada transaksi</td>`;
         tbody.appendChild(tr);
       }
-
-      renderSummary(filtered);
     }
 
-    function renderSummary(filtered) {
-      const summaryData = { TOTAL: { count:0, total:0 } };
+    function renderSummary(payments, refunds, typeMap) {
+      const summaryData = { TOTAL: { count: 0, total: 0 } };
 
-      filtered.forEach(p => {
-        const method = p.Type === "Refund" ? "Refund" : (paymentTypesMap[p.PaymentTypeId] || "Lainnya");
+      payments.forEach(p => {
+        const method = typeMap[p.PaymentTypeId] || "Lainnya";
         const amt = Number(p.Amount) || 0;
-
-        if(!summaryData[method]) summaryData[method] = { count:0, total:0 };
+        if (!summaryData[method]) summaryData[method] = { count: 0, total: 0 };
         summaryData[method].count++;
         summaryData[method].total += amt;
-
         summaryData["TOTAL"].count++;
         summaryData["TOTAL"].total += amt;
+      });
+
+      refunds.forEach(r => {
+        const amt = Number(r.Amount) || 0;
+        if (!summaryData["REFUND"]) summaryData["REFUND"] = { count: 0, total: 0 };
+        summaryData["REFUND"].count++;
+        summaryData["REFUND"].total -= amt;
+        summaryData["TOTAL"].total -= amt;
       });
 
       const sumBody = document.getElementById("summary");
@@ -169,18 +150,10 @@
           <td class="p-2 border-b">${summaryData[m].count}</td>
           <td class="p-2 border-b">Rp ${summaryData[m].total.toLocaleString("id-ID")}</td>
         `;
-        if(m === "Refund") row.className = "text-red-600";
+        if (m === "REFUND") row.classList.add("text-red-600");
         sumBody.appendChild(row);
       });
     }
-
-    document.getElementById("filterBtn").addEventListener("click", () => {
-      const start = document.getElementById("startDate").value;
-      const end = document.getElementById("endDate").value;
-      if(!start) return alert("Silakan pilih tanggal mulai!");
-      const filtered = filterByDate(start, end || null);
-      renderTable(filtered);
-    });
 
     loadData();
   </script>
