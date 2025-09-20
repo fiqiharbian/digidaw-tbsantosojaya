@@ -4256,8 +4256,8 @@
   {
     "Id": 710,
     "Name": "Besi Holo 2 x 4 x 0.25",
-    "Price": 12000.0,
-    "Quantity": 0
+    "Price": 13000.0,
+    "Quantity": -2
   },
   {
     "Id": 711,
@@ -8114,20 +8114,20 @@
   {
     "Id": 1353,
     "Name": "Supramas L 2 1/2\" (D)",
-    "Price": 0.0,
-    "Quantity": 0
+    "Price": 10000.0,
+    "Quantity": 50
   },
   {
     "Id": 1354,
     "Name": "Supramas L 3\" (D)",
-    "Price": 0.0,
-    "Quantity": 0
+    "Price": 15000.0,
+    "Quantity": 100
   },
   {
     "Id": 1355,
     "Name": "Supramas T 3\" (D)",
-    "Price": 0.0,
-    "Quantity": 0
+    "Price": 20000.0,
+    "Quantity": 20
   },
   {
     "Id": 1356,
